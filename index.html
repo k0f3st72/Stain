@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="STAIN — продакшн-студия, специализирующаяся на съёмке музыкальных клипов в эстетике Webcore и Dark Digital">
+    <title>STAIN — Visual Production Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="logo-container">
+            <div class="animated-logo">
+                <svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <filter id="liquid">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2">
+                                <animate attributeName="baseFrequency" dur="25s" values="0.008;0.014;0.008" repeatCount="indefinite"/>
+                            </feTurbulence>
+                            <feDisplacementMap in="SourceGraphic" scale="2"/>
+                        </filter>
+                    </defs>
+                    <use href="stain-wordmark.svg#stain-wordmark" filter="url(#liquid)" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Video Background -->
+    <video
+        id="videoBackground"
+        class="video-background"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster=""
+    >
+        <source src="stain-logo.mp4" type="video/mp4">
+    </video>
+
+    <!-- Dark Overlay -->
+    <div class="video-overlay" aria-hidden="true"></div>
+
+    <nav class="navbar" role="navigation" aria-label="Главная навигация">
+        <div class="navbar-container">
+            <a href="#hero" class="logo" aria-label="STAIN — на главную">
+                <svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg" class="logo-svg" preserveAspectRatio="xMidYMid meet">
+                    <use href="stain-wordmark.svg#stain-wordmark" />
+                </svg>
+            </a>
+            <button class="burger" aria-label="Открыть меню" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link active"><span class="nav-trace"></span>Home</a></li>
+                <li><a href="#about" class="nav-link"><span class="nav-trace"></span>About</a></li>
+                <li><a href="#services" class="nav-link"><span class="nav-trace"></span>Services</a></li>
+                <li><a href="#process" class="nav-link"><span class="nav-trace"></span>Process</a></li>
+                <li><a href="#works" class="nav-link"><span class="nav-trace"></span>Works</a></li>
+                <li><a href="#contact" class="nav-link"><span class="nav-trace"></span>Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-logo-container" data-scroll-element>
+                <div class="hero-animated-logo">
+                    <svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg" class="hero-logo-svg" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <filter id="heroLiquid">
+                                <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="2">
+                                    <animate attributeName="baseFrequency" dur="30s" values="0.006;0.009;0.006" repeatCount="indefinite"/>
+                                </feTurbulence>
+                                <feDisplacementMap in="SourceGraphic" scale="2"/>
+                            </filter>
+                        </defs>
+                        <use href="stain-wordmark.svg#stain-wordmark" filter="url(#heroLiquid)" />
+                    </svg>
+                </div>
+            </div>
+            <div class="hero-content" data-scroll-element>
+                <p class="hero-description">
+                    Продакшн-студия, специализирующаяся на съёмке музыкальных клипов
+                    и визуальном продакшне в эстетике dark digital.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#works" class="btn btn-primary">
+                        <span class="btn-trace"></span>
+                        <span class="btn-text">Смотреть работы</span>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span class="btn-trace"></span>
+                        <span class="btn-text">Обсудить проект</span>
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator" aria-hidden="true">
+                <span></span>
+            </div>
+        </section>
+
+        <div class="section-divider">
+            <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
+                <path class="divider-trace" d="M 0 50 Q 300 20, 600 50 T 1200 50" />
+            </svg>
+        </div>
+
+        <section id="about" class="about section-reveal">
+            <div class="container">
+                <h2 class="section-title">Кто мы</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>
+                            <strong class="highlight">STAIN — это команда режиссёров, операторов, колористов и монтажёров,
+                            одержимых одной идеей: каждый клип должен оставлять след.</strong>
+                        </p>
+                        <p>
+                            Мы работаем в эстетике Webcore и Dark Digital — там, где цифровая
+                            реальность встречается с чем-то глубоко человеческим. Глитчи,
+                            кислотные акценты, зерно, тёмные градиенты и свет, который режет кадр.
+                            Это не просто визуальный стиль — это язык, на котором мы говорим
+                            с музыкой.
+                        </p>
+                        <p>
+                            Но если честно — <strong class="highlight">нам просто чертовски нравится визуализировать музыку.</strong>
+                            Это то, что мы любим больше всего. Музыкальный клип для нас — это не
+                            «сопровождение трека картинкой». Это нечто большее. Это олицетворение
+                            того, как каждая нота переплетается в визуальные эффекты, в приятные
+                            для глаз сюжеты, в героев, которые живут внутри клипа.
+                        </p>
+                    </div>
+                    <div class="about-text">
+                        <p>
+                            Мы передаём полное настроение трека в своеобразной оболочке — так, чтобы зритель
+                            не просто услышал песню, а прожил её.
+                        </p>
+                        <p>
+                            Мы не снимаем «просто видео». Мы создаём визуальные миры, где музыка
+                            и картинка становятся одним целым. <strong class="highlight">Где каждая нота — это кадр. Где
+                            каждый бит — это движение. Где каждый трек — это история, которую
+                            хочется пересматривать.</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">
+            <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
+                <path class="divider-trace" d="M 0 50 Q 300 80, 600 50 T 1200 50" />
+            </svg>
+        </div>
+
+        <section id="services" class="services section-reveal">
+            <div class="container">
+                <h2 class="section-title">Что мы делаем</h2>
+                <div class="services-grid">
+                    <article class="service-card">
+                        <span class="service-number">01</span>
+                        <h3 class="service-title">Музыкальные клипы</h3>
+                        <p class="service-description">
+                            Полный цикл: от идеи и сценария до финального цвета и мастеринга.
+                            Работаем с артистами любого масштаба — от андеграунда до крупных лейблов.
+                        </p>
+                    </article>
+                    <article class="service-card">
+                        <span class="service-number">02</span>
+                        <h3 class="service-title">Арт-съёмки и лукбуки</h3>
+                        <p class="service-description">
+                            Визуальный контент для брендов, артистов и медиа в аутентичной эстетике.
+                        </p>
+                    </article>
+                    <article class="service-card">
+                        <span class="service-number">03</span>
+                        <h3 class="service-title">Пост-продакшн</h3>
+                        <p class="service-description">
+                            Монтаж, цветокоррекция, VFX, звуковой дизайн.
+                            Даже из сырого материала делаем кино.
+                        </p>
+                    </article>
+                    <article class="service-card">
+                        <span class="service-number">04</span>
+                        <h3 class="service-title">Креативное продюсирование</h3>
+                        <p class="service-description">
+                            Помогаем артистам найти визуальный язык: концепция, референсы, локации, кастинг.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">
+            <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
+                <path class="divider-trace" d="M 0 50 Q 300 30, 600 50 T 1200 50" />
+            </svg>
+        </div>
+
+        <section id="process" class="process section-reveal">
+            <div class="container">
+                <h2 class="section-title">Как мы работаем</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-number">01</span>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Бриф и идея</h3>
+                            <p class="timeline-description">
+                                Слушаем трек, погружаемся в настроение, обсуждаем концепцию.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-number">02</span>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Сценарий и препродакшн</h3>
+                            <p class="timeline-description">
+                                Раскадровки, мудборд, локации, кастинг, план съёмок.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-number">03</span>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Съёмка</h3>
+                            <p class="timeline-description">
+                                Один съёмочный день или неделя — под задачу. Свет, движение, импровизация.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-number">04</span>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Пост-продакшн</h3>
+                            <p class="timeline-description">
+                                Монтаж, цвет, графика, финальный грейд в эстетике Webcore и Dark Digital.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-number">05</span>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Релиз</h3>
+                            <p class="timeline-description">
+                                Готовый клип + вертикальные нарезки, тизеры, BTS-контент для соцсетей.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">
+            <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
+                <path class="divider-trace" d="M 0 50 Q 300 70, 600 50 T 1200 50" />
+            </svg>
+        </div>
+
+        <section id="works" class="works section-reveal">
+            <div class="container">
+                <h2 class="section-title">Работы</h2>
+                <p class="works-subtitle">Каждый проект — отдельная история. Выбирай и смотри.</p>
+                <div class="works-filters">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="clips">Клипы</button>
+                    <button class="filter-btn" data-filter="art">Арт</button>
+                    <button class="filter-btn" data-filter="ads">Реклама</button>
+                </div>
+                <div class="works-grid">
+                    <article class="work-card" data-category="clips">
+                        <div class="work-thumbnail">
+                            <div class="work-info">
+                                <h3 class="work-title">Проект 01</h3>
+                                <span class="work-category">Клип</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="work-card" data-category="art">
+                        <div class="work-thumbnail">
+                            <div class="work-info">
+                                <h3 class="work-title">Проект 02</h3>
+                                <span class="work-category">Арт</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="work-card" data-category="clips">
+                        <div class="work-thumbnail">
+                            <div class="work-info">
+                                <h3 class="work-title">Проект 03</h3>
+                                <span class="work-category">Клип</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="work-card" data-category="ads">
+                        <div class="work-thumbnail">
+                            <div class="work-info">
+                                <h3 class="work-title">Проект 04</h3>
+                                <span class="work-category">Реклама</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="work-card" data-category="art">
+                        <div class="work-thumbnail">
+                            <div class="work-info">
+                                <h3 class="work-title">Проект 05</h3>
+                                <span class="work-category">Арт</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="work-card" data-category="clips">
+                        <div class="work-thumbnail">
+                            <div class="work-info">
+                                <h3 class="work-title">Проект 06</h3>
+                                <span class="work-category">Клип</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider">
+            <svg viewBox="0 0 1200 100" preserveAspectRatio="none">
+                <path class="divider-trace" d="M 0 50 Q 300 25, 600 50 T 1200 50" />
+            </svg>
+        </div>
+
+        <section id="contact" class="contact section-reveal">
+            <div class="container">
+                <h2 class="section-title">Давай сделаем что-то, что оставит след</h2>
+                <p class="contact-subtitle">
+                    Есть трек, идея или бренд, который хочет звучать и выглядеть иначе?
+                    Напиши нам — обсудим.
+                </p>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            class="form-input"
+                            placeholder="Имя"
+                            required
+                            aria-label="Ваше имя"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
+                            placeholder="Email"
+                            required
+                            aria-label="Ваш email"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="url"
+                            id="project"
+                            name="project"
+                            class="form-input"
+                            placeholder="Ссылка на проект / трек"
+                            aria-label="Ссылка на ваш проект или трек"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <textarea
+                            id="message"
+                            name="message"
+                            class="form-textarea"
+                            placeholder="Сообщение"
+                            rows="5"
+                            required
+                            aria-label="Ваше сообщение"
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit">Отправить</button>
+                </form>
+                <div class="contact-info">
+                    <div class="social-links">
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                        <span aria-hidden="true">•</span>
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
+                        <span aria-hidden="true">•</span>
+                        <a href="https://vimeo.com" target="_blank" rel="noopener noreferrer">Vimeo</a>
+                        <span aria-hidden="true">•</span>
+                        <a href="https://t.me" target="_blank" rel="noopener noreferrer">Telegram</a>
+                    </div>
+                    <a href="mailto:hello@stain.studio" class="email-link">hello@stain.studio</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-brand">STAIN — Visual production studio.</p>
+            <p class="footer-copyright">© 2025 STAIN. Все права защищены.</p>
+            <p class="footer-tagline">Сделано с любовью к кадру.</p>
+        </div>
+    </footer>
+
+    <div class="success-message" id="successMessage" role="alert" aria-live="polite">
+        <p>Спасибо! Мы свяжемся с тобой.</p>
+    </div>
+</body>
+</html>
