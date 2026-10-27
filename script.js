@@ -17,29 +17,63 @@ window.addEventListener('load', () => {
 });
 
 // ───────────────────────────────────────────────────────
-// VIDEO BACKGROUND AUTOPLAY
+// VIDEO BACKGROUND AUTOPLAY — IMG_4302.MOV
 // ───────────────────────────────────────────────────────
 
-const videoBackground = document.getElementById('videoBackground');
+const heroVideo = document.querySelector('.hero-video-bg');
 
-if (videoBackground) {
+if (heroVideo) {
     // Ensure video plays even if autoplay is blocked
     const playVideo = () => {
-        videoBackground.play().catch(error => {
-            console.log('Video autoplay prevented:', error);
-            // Graceful fallback - video won't play but site still works
-        });
+        const playPromise = heroVideo.play();
+
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log('Hero video playing');
+                })
+                .catch(error => {
+                    console.log('Video autoplay prevented:', error.message);
+                    // Graceful fallback - video won't play but site still works
+                });
+        }
     };
 
-    // Try to play on load
-    videoBackground.addEventListener('loadeddata', playVideo);
+    // Try to play when metadata is loaded
+    heroVideo.addEventListener('loadedmetadata', () => {
+        console.log('Video metadata loaded');
+        playVideo();
+    });
 
-    // Also try on user interaction if autoplay was blocked
-    document.addEventListener('click', () => {
-        if (videoBackground.paused) {
+    // Try to play when video can start playing
+    heroVideo.addEventListener('canplay', () => {
+        console.log('Video can play');
+        playVideo();
+    });
+
+    // Try on user interaction if autoplay was blocked
+    const startOnInteraction = () => {
+        if (heroVideo.paused) {
             playVideo();
         }
-    }, { once: true });
+    };
+
+    document.addEventListener('click', startOnInteraction, { once: true });
+    document.addEventListener('touchstart', startOnInteraction, { once: true });
+    document.addEventListener('scroll', startOnInteraction, { once: true });
+
+    // Log video state for debugging
+    heroVideo.addEventListener('loadstart', () => console.log('Video loading started'));
+    heroVideo.addEventListener('error', (e) => {
+        console.error('Video error:', e);
+        if (heroVideo.error) {
+            console.error('Video error code:', heroVideo.error.code);
+            console.error('Video error message:', heroVideo.error.message);
+        }
+    });
+    heroVideo.addEventListener('stalled', () => console.warn('Video loading stalled'));
+    heroVideo.addEventListener('waiting', () => console.log('Video waiting for data'));
+    heroVideo.addEventListener('playing', () => console.log('Video is playing'));
 }
 
 // ───────────────────────────────────────────────────────
@@ -159,7 +193,6 @@ function updateHeroScroll() {
 // ───────────────────────────────────────────────────────
 
 const revealSections = document.querySelectorAll('.section-reveal');
-const sectionDividers = document.querySelectorAll('.section-divider');
 
 const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -179,58 +212,6 @@ revealSections.forEach(section => {
     revealObserver.observe(section);
 });
 
-// Animate section dividers
-const dividerObserver = new IntersectionObserver(
-    (entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    },
-    {
-        threshold: 0.5
-    }
-);
-
-sectionDividers.forEach(divider => {
-    dividerObserver.observe(divider);
-});
-
-// ───────────────────────────────────────────────────────
-// PORTFOLIO FILTERS
-// ───────────────────────────────────────────────────────
-
-const filterButtons = document.querySelectorAll('.filter-btn');
-const workCards = document.querySelectorAll('.work-card');
-
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const filter = button.getAttribute('data-filter');
-
-        // Update active button
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-
-        // Filter work cards
-        workCards.forEach(card => {
-            const category = card.getAttribute('data-category');
-
-            if (filter === 'all' || category === filter) {
-                card.classList.remove('hidden');
-                card.style.display = 'block';
-            } else {
-                card.classList.add('hidden');
-                setTimeout(() => {
-                    if (card.classList.contains('hidden')) {
-                        card.style.display = 'none';
-                    }
-                }, 500);
-            }
-        });
-    });
-});
-
 // ───────────────────────────────────────────────────────
 // CONTACT FORM
 // ───────────────────────────────────────────────────────
@@ -239,19 +220,39 @@ const contactForm = document.getElementById('contactForm');
 const successMessage = document.getElementById('successMessage');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Show success message
-        successMessage.classList.add('show');
+        const formData = new FormData(contactForm);
 
-        // Reset form
-        contactForm.reset();
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
 
-        // Hide success message after 4 seconds
-        setTimeout(() => {
-            successMessage.classList.remove('show');
-        }, 4000);
+            if (response.ok) {
+                // Show success message
+                successMessage.classList.add('show');
+
+                // Reset form
+                contactForm.reset();
+
+                // Hide success message after 4 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 4000);
+            } else {
+                // Handle error
+                alert('Произошла ошибка при отправке формы. Попробуйте еще раз.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Произошла ошибка при отправке формы. Попробуйте еще раз.');
+        }
     });
 }
 
@@ -466,3 +467,96 @@ window.addEventListener('resize', resizeHandler);
 console.log('%cSTAIN', 'font-size: 48px; font-weight: bold; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.3);');
 console.log('%cVisual Production Studio', 'font-size: 14px; color: #999; letter-spacing: 0.1em;');
 console.log('%chello@stain.studio', 'font-size: 12px; color: #666; margin-top: 10px;');
+
+// ───────────────────────────────────────────────────────
+// WORK PORTFOLIO GALLERY & MODAL PLAYER
+// ───────────────────────────────────────────────────────
+
+const workCards = document.querySelectorAll('.work-card');
+const workModal = document.getElementById('workModal');
+const modalVideo = document.getElementById('modalVideo');
+const modalClose = document.querySelector('.work-modal-close');
+const modalOverlay = document.querySelector('.work-modal-overlay');
+
+// Hover preview on desktop only
+workCards.forEach(card => {
+    const preview = card.querySelector('.work-preview');
+
+    if (preview && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        card.addEventListener('mouseenter', () => {
+            preview.play().catch(err => console.log('Preview play prevented:', err));
+        });
+
+        card.addEventListener('mouseleave', () => {
+            preview.pause();
+            preview.currentTime = 0;
+        });
+    }
+
+    // Click to open modal
+    card.addEventListener('click', () => {
+        const videoSrc = card.getAttribute('data-video');
+        if (videoSrc) {
+            openWorkModal(videoSrc);
+        }
+    });
+});
+
+// Open work modal
+function openWorkModal(videoSrc) {
+    // Stop all preview videos
+    document.querySelectorAll('.work-preview').forEach(v => {
+        v.pause();
+        v.currentTime = 0;
+    });
+
+    // Set video source and open modal
+    const source = modalVideo.querySelector('source');
+    source.src = videoSrc;
+    modalVideo.load();
+
+    workModal.classList.add('active');
+    document.body.classList.add('modal-open');
+
+    // Play video after a short delay for smooth transition
+    setTimeout(() => {
+        modalVideo.play().catch(err => console.log('Modal video play prevented:', err));
+    }, 300);
+}
+
+// Close work modal
+function closeWorkModal() {
+    modalVideo.pause();
+    modalVideo.currentTime = 0;
+    workModal.classList.remove('active');
+    document.body.classList.remove('modal-open');
+
+    // Clear source to stop loading
+    setTimeout(() => {
+        const source = modalVideo.querySelector('source');
+        source.src = '';
+        modalVideo.load();
+    }, 300);
+}
+
+// Close button click
+if (modalClose) {
+    modalClose.addEventListener('click', closeWorkModal);
+}
+
+// Overlay click to close
+if (modalOverlay) {
+    modalOverlay.addEventListener('click', closeWorkModal);
+}
+
+// ESC key to close
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && workModal && workModal.classList.contains('active')) {
+        closeWorkModal();
+    }
+});
+
+// Prevent modal content click from closing
+document.querySelector('.work-modal-content')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+});
